@@ -1,0 +1,71 @@
+{% extends "doc_number/base.html" %}
+{% load bootstrap_toolkit %}
+{% load url from future %}
+
+{% block title %}Documents & Parts{% endblock title %}
+
+{% block content %}
+    <div class="row-fluid">
+        <div class="span12">
+            <h2>Documents & Parts</h2>
+            <ul class="nav nav-pills">
+                {% if perms.doc_number.add_document %}
+                    <li><a href='{% url 'add_document' %}'>Request Document/Part Number</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="row-fluid">
+        <div class="span12">
+            <form class='form-inline' accept-charset='UTF-8' method='get' action=''>
+                {{ form|as_bootstrap:"inline" }}
+                <button type='submit' class='btn' name='submit'>Search</button>
+                <button type="submit" class="btn btn-success" name="export_document_list" value="True">Export</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="row-fluid">
+        <div class="span12">
+            {% load pagination_tags %}
+            {% autopaginate object_list %}
+
+            {% paginate %}
+            <table class='table table-bordered table-striped table-condensed'>
+                <thead>
+                    <tr>
+                        {% if perms.doc_number.change_document or perms.doc_number.delete_document %}
+                        <th> </th>
+                        {% endif %}
+                        <th>Document/Part Number</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for doc in object_list %}
+                        <tr>
+                            {% if perms.doc_number.change_document or perms.doc_number.delete_document%}
+                            <td>
+                                {% if perms.doc_number.change_document %}
+                                <a href="{% url 'edit_document' doc.id %}"><i class="icon-pencil"></i> </a>
+                                {% endif %}
+                                {% if perms.doc_number.delete_document %}
+                                <a href="{% url 'delete_document' doc.id %}"><i class="icon-trash"></i> </a>
+                                {% endif %}
+                            </td>
+                            {% endif %}
+                            <td>
+                                <a href="{% url 'view_document' doc.id %}">{{ doc.document_id }}</a>
+                            </td>
+                            <td>{{ doc.name }}</td>
+                            <td>{{ doc.description|truncatewords:12 }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% paginate %}
+        </div>
+    </div>
+{% endblock content %}

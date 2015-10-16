@@ -1,0 +1,32 @@
+{% extends "doc_number/base.html" %}
+{% load bootstrap_toolkit %}
+{% load url from future %}
+
+{% block title %}Edit {{ object }}{% endblock title %}
+
+{% block crumbs %}
+    {{ block.super }}
+    <li>
+        <span class="divider">/</span>
+        <a href="{% url 'edit_document' object.id %}">Edit {{ object }}</a>
+    </li>
+{% endblock crumbs %}
+
+{% block content %}
+    <div class="row-fluid">
+        <div class="span12">
+            <h2>Edit {{ object }}</h2>
+
+            <br style="clear: both;" />
+
+            <form id="edit-document-number" class="form-horizontal" action="" method="post" accept-charset="utf-8">
+                {% csrf_token %}
+                {{ form|as_bootstrap:"horizontal" }}
+                <div class="form-actions">
+                    <input class="btn btn-primary" type="submit" value="Submit" name="submit">
+                    <input class="btn" type="button" onclick="history.go(-1)" value="Cancel">
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock content %}

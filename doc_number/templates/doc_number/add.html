@@ -1,0 +1,32 @@
+{% extends "doc_number/base.html" %}
+{% load bootstrap_toolkit %}
+{% load url from future %}
+
+{% block title %}Request Document/Part Number{% endblock title %}
+
+{% block crumbs %}
+    {{ block.super }}
+    <li>
+        <span class="divider">/</span>
+        <a href="{% url 'add_document' %}">Request Document/Part Number</a>
+    </li>
+{% endblock crumbs %}
+
+{% block content %}
+    <div class="row-fluid">
+        <div class="span12">
+            <h2>Request Document/Part Number</h2>
+
+            <br style="clear: both;" />
+
+            <form id="request-document-number" class="form-horizontal" action="" method="post" accept-charset="utf-8">
+                {% csrf_token %}
+                {{ form|as_bootstrap:"horizontal" }}
+                <div class="form-actions">
+                    <input class="btn btn-primary" type="submit" value="Submit" name="submit">
+                    <input class="btn" type="button" onclick="history.go(-1)" value="Cancel">
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock content %}

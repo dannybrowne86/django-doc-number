@@ -1,0 +1,8 @@
+{% extends "timepiece/base.html" %}
+{% load url from future %}
+
+{% block crumbs %}
+    <li>
+        <a href="{% url 'list_documents' %}">Documents & Parts</a>
+    </li>
+{% endblock crumbs %}
